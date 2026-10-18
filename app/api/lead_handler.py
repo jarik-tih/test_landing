@@ -8,7 +8,7 @@ from app.services.lead_service import (
     submit_lead,
 )
 from app.validators.lead_validator import LeadValidationError
-
+from app.services.telegram_service import notify_new_lead
 
 class LeadRequestHandler(SimpleHTTPRequestHandler):
     """HTTP-обработчик сайта и API заявок."""
@@ -126,6 +126,13 @@ class LeadRequestHandler(SimpleHTTPRequestHandler):
             )
             return
 
+        # Отправляем уведомление после успешного создания заявки.
+        try:
+            notify_new_lead(payload)
+        except Exception:
+            pass
+
+        # Возвращаем клиенту успешный ответ.
         self.send_json(
             201,
             {
