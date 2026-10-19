@@ -10,9 +10,8 @@ FRONTEND_DIR = BASE_DIR / "frontend"
 DATA_DIR = BASE_DIR / "data"
 DATABASE_PATH = DATA_DIR / "leads.sqlite3"
 
-# HTTP-сервер
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = "0.0.0.0"
+PORT = int(os.environ.get("PORT", "8000"))
 
 # Ограничения
 MAX_REQUEST_SIZE = 20_000
